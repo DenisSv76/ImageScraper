@@ -1,0 +1,41 @@
+{# templates/result.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <div id="header" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto;">
+        <h1>Картинки со страницы {{ url }}:</h1>
+    </div>
+{% endblock %}
+{% block content %}
+    {% set countImages = 0 %}
+    <div id="content" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto;">
+        {% if images is defined and images|length > 0 %}
+            <table>
+                <thead>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for imagerow in images %}
+                    <tr>
+                        {% for image in imagerow %}
+                            {% set countImages = countImages + 1 %}
+                            <td>
+                                <img src="{{ image }}" alt="Image" style="width: 200px; height: 200px;">
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    <div id="result" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto;">
+        <h1>Всего обнаружено {{ countImages }} изображений общим размером {{ fileSize }} Мб</h1>
+    </div>
+{% endblock %}
+

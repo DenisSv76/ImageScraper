@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <div id="header" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto;">
+        <h1>Введите url страницы с картинками:</h1>
+    </div>
+{% endblock %}
+{% block error %}
+    {% for flashMessage in app.flashes('error') %}
+        <div class="flash-error" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto; color: red;">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block content %}
+    <div id="content" style="display:flex; flex-direction:row; justify-content:center; padding:20px; margin: auto;">
+        <form action="{{ path('start_image_scraper') }}" method="post">
+            <label for="url">Url:</label>
+            <input type="text" id="url" name="url" required>
+            <button type="submit">Собрать</button>
+        </form>
+    </div>
+{% endblock %}
