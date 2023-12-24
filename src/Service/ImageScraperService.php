@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -31,6 +32,36 @@ class ImageScraperService
 
         /** @var string[] $images */
         $images = $crawler->filter('img')->extract(['src']);
+
+        /** @var string[] backgroundImages */
+        $backgroundImages = $crawler->filterXPath('//div[@style]')->extract(['style']);
+
+        $newBackgroundImages = [];
+
+        foreach ($backgroundImages as $backgroundImage) {
+            $explodedArray = explode(';', $backgroundImage);
+            $newBackgroundImages = array_merge($newBackgroundImages, $explodedArray);
+        }
+
+        foreach ($newBackgroundImages as $key => $backgroundImage) {
+            if (strpos($backgroundImage, 'background:') === false && strpos($backgroundImage, 'background-image:') === false) {
+                unset($newBackgroundImages[$key]);
+            }
+        }
+
+        foreach ($newBackgroundImages as $imageString) {
+            if (preg_match('/url\(\'(.*?)\'\)/', $imageString, $matches)) {
+                $images[] = $matches[1];
+            }
+        }
+
+        foreach ($newBackgroundImages as $imageString) {
+            if (preg_match('/url\("([^"]+)"\)/', $imageString, $matches)) {
+                $images = $matches[1];
+            }
+        }
+
+        $crawler->filter('img')->attr('src');
         $images = $this->checkFullPath($url, $images);
 
         return $images;
