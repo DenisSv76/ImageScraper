@@ -21,15 +21,6 @@ class ImageScraperController extends AbstractController
         $this->imageScraperService = $imageScraperService;
     }
 
-    /*#[Route('/image/scraper', name: 'app_image_scraper')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ImageScraperController.php',
-        ]);
-    }*/
-
     #[Route('/start', name: 'start_image_scraper')]
     public function start(Request $request, ValidatorInterface $validator): Response|null
     {
