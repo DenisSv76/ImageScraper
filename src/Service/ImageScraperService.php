@@ -31,16 +31,6 @@ class ImageScraperService
 
         /** @var string[] $images */
         $images = $crawler->filter('img')->extract(['src']);
-
-        /** @var string[] $imagesBackground */
-        $imagesBackground = $crawler->filter('[style*=background-image]')->each(function ($node) {
-            $style = $node->attr('style');
-            preg_match('/url\((.*?)\)/', $style, $matches);
-            return $matches[1] ?? null;
-        });
-
-        $images = array_merge($images, $imagesBackground);
-        //$images = array_unique($images);
         $images = $this->checkFullPath($url, $images);
 
         return $images;

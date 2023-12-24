@@ -21,16 +21,16 @@ class ImageScraperController extends AbstractController
         $this->imageScraperService = $imageScraperService;
     }
 
-    #[Route('/image/scraper', name: 'app_image_scraper')]
+    /*#[Route('/image/scraper', name: 'app_image_scraper')]
     public function index(): JsonResponse
     {
         return $this->json([
             'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/ImageScraperController.php',
         ]);
-    }
+    }*/
 
-    #[Route('/image/start', name: 'start_image_scraper')]
+    #[Route('/start', name: 'start_image_scraper')]
     public function start(Request $request, ValidatorInterface $validator): Response|null
     {
         /** @var string|null $url */
@@ -56,7 +56,7 @@ class ImageScraperController extends AbstractController
         return $this->render('start.html.twig');
     }
 
-    #[Route('/image/result', name: 'result_image_scraper')]
+    #[Route('/result', name: 'result_image_scraper')]
     public function result(Request $request): Response
     {
         /** @var string|null $url */
