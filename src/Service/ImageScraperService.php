@@ -34,7 +34,7 @@ class ImageScraperService
         $images = $crawler->filter('img')->extract(['src']);
 
         /** @var string[] backgroundImages */
-        $backgroundImages = $crawler->filterXPath('//div[@style]')->extract(['style']);
+        $backgroundImages = $crawler->filterXPath('//*[@style]')->extract(['style']);
 
         $newBackgroundImages = [];
 
@@ -48,7 +48,7 @@ class ImageScraperService
                 unset($newBackgroundImages[$key]);
             }
         }
-
+        
         foreach ($newBackgroundImages as $imageString) {
             if (preg_match('/url\(\'(.*?)\'\)/', $imageString, $matches)) {
                 $images[] = $matches[1];
