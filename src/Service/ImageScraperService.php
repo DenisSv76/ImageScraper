@@ -61,7 +61,6 @@ class ImageScraperService
             }
         }
 
-        $crawler->filter('img')->attr('src');
         $images = $this->checkFullPath($url, $images);
 
         return $images;
